@@ -1,7 +1,7 @@
 package com.xiaopy.mine.config;
 
 import com.xiaopy.mine.domain.MyObject;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,11 +15,9 @@ import org.springframework.context.annotation.Configuration;
 public class MineAutoConfig {
 
 
-    @Autowired
-    private MineConfigProperties properties;
-
     @Bean
-    public MyObject myObject(){
+    @ConditionalOnMissingBean(MyObject.class)
+    public MyObject myObject(MineConfigProperties properties){
         System.out.println(">>>>> init bean >>>>>");
         MyObject myObject = new MyObject();
         myObject.setIp(properties.getIp());
